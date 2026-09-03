@@ -9,14 +9,22 @@ namespace KitchenGoldfishMemory
     {
         public const string MOD_GUID = $"IcedMilo.PlateUp.{MOD_NAME}";
         public const string MOD_NAME = "Goldfish Memory";
-        public const string MOD_VERSION = "0.1.3";
+        public const string MOD_VERSION = "0.2.0";
 
         Harmony _harmony;
 
         public Main()
         {
             _harmony = new Harmony(MOD_GUID);
-            _harmony.PatchAll(Assembly.GetExecutingAssembly());
+
+            try
+            {
+                _harmony.PatchAll(Assembly.GetExecutingAssembly());
+            }
+            catch (System.Exception ex)
+            {
+                LogError($"Failed to apply patches: {ex}");
+            }
         }
 
         public void PostActivate(KitchenMods.Mod mod)
